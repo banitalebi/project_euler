@@ -1,6 +1,4 @@
 #[allow(dead_code)]
-use std::cmp;
-
 pub fn problem_4() {
     // Problem 4: Largest Palindrome Product
     // https://projecteuler.net/problem=4
@@ -13,7 +11,9 @@ pub fn problem_4() {
         while _j>= _min {
             let _product = _i * _j;
             if is_palindrome(_product){
-                max_palindrome = cmp::max(max_palindrome, _product);
+                if max_palindrome < _product{
+                    max_palindrome = _product;
+                }               
             }
             _j -= 1;
         }
