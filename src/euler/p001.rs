@@ -1,4 +1,4 @@
-#[allow(dead_code)]
+#[allow(unused)]
 pub fn problem_1() {
     // Problem 1: Multiples of 3 or 5
     // https://projecteuler.net/problem=1

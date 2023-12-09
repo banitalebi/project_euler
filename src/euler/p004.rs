@@ -1,4 +1,4 @@
-#[allow(dead_code)]
+#[allow(unused)]
 pub fn problem_4() {
     // Problem 4: Largest Palindrome Product
     // https://projecteuler.net/problem=4

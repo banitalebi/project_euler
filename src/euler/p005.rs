@@ -1,4 +1,4 @@
-#[allow(dead_code)]
+#[allow(unused)]
 pub fn problem_5() {
     // Problem 5: smallest multiple
     // https://projecteuler.net/problem=5

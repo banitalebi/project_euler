@@ -1,4 +1,4 @@
-#[allow(dead_code)]
+#[allow(unused)]
 pub fn problem_2() {
     // Problem 2: Even Fibonacci Numbers
     // https://projecteuler.net/problem=2    

@@ -1,4 +1,4 @@
-#[allow(dead_code)]
+#[allow(unused)]
 pub fn problem_6() {
     // Problem 6: sum square difference
     // https://projecteuler.net/problem=6
