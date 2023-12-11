@@ -1,6 +1,6 @@
 #[allow(unused)]
 pub fn problem_8() {
-    // Problem 8: 
+    // Problem 8: Largest Product in a Series
     // https://projecteuler.net/problem=8
     let mut s = String::new();
     s.push_str("73167176531330624919225119674426574742355349194934");
@@ -24,23 +24,20 @@ pub fn problem_8() {
     s.push_str("05886116467109405077541002256983155200055935729725");
     s.push_str("71636269561882670428252483600823257530420752963450");
 
-    let target: u8 = 48;
+    let target: u64 = 0;
     let mut _max: u64 = 1;
     for j in 13..(1000-12){
         let s = &s[(j-13)..j];
-        let nums = s.as_bytes().to_vec();             
+        let nums: Vec<u64> = s.chars().map(|c| c.to_digit(10).unwrap() as u64).collect();             
         let mut temp_max: u64 = 1;
         if !nums.contains(&target){
             for i in nums{
-                // temp_max *= i as u64;
-                print!("{}",i)      
-            }
-            println!("{}", "-");  
+                temp_max *= i as u64;      
+            }  
             if _max<temp_max{
                 _max=temp_max;
-            }
-            println!("{}",_max);
-        }
+            }            
+        }        
     }
-        
+    println!("Problem 8: largest product in a series {}",_max);
 }
