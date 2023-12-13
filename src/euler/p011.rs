@@ -1,7 +1,7 @@
-#[allow(unused)]
 use ndarray::Array2;
 
 
+#[allow(unused)]
 pub fn problem_11() {
     // Problem 11: Largest Product in a Grid
     // https://projecteuler.net/problem=11
