@@ -6,7 +6,7 @@ pub fn problem_12() {
     let mut natural:u32 = 1;    
     loop{
         triangular+=natural;
-        if count_factors(triangular)>500{
+        if count_factors(triangular)>=500{
             break;        
         }
         natural+=1;
