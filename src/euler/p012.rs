@@ -3,12 +3,10 @@ pub fn problem_12() {
     // Problem 12: highly divisible triangular number
     // https://projecteuler.net/problem=12
     let mut triangular:u64 = 0;
-    let mut i:u64 = 1;
-    let mut count:u32 = 0;
+    let mut i:u64 = 1;    
     loop{
-        triangular+=i;
-        count = count_factors(triangular);
-        if count>500{
+        triangular+=i;        
+        if count_factors(triangular)>500{
             break;
         }
         i+=1;
