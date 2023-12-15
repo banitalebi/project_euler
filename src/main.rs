@@ -1,5 +1,5 @@
 mod euler;
 
 fn main() {    
-    euler::p009::problem_9();
+    euler::p011::problem_11();
 }
