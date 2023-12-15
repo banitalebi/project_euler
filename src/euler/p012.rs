@@ -41,4 +41,5 @@ fn test_count_factors(){
     assert_eq!(count_factors(15), 4);
     assert_eq!(count_factors(21), 4);
     assert_eq!(count_factors(28), 6);
+    assert_eq!(count_factors(76576500), 576);
 }
