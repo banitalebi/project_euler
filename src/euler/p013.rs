@@ -11,9 +11,6 @@ pub fn problem_13() {
     for line in data.lines(){
         let num: f64 = line.parse().unwrap();
         _sum+=num;       
-    }
-    for _ in 1..43{
-        _sum/=10.0;
-    }    
-    println!("Problem 13: large sum, {}", _sum.floor());
+    }  
+    println!("Problem 13: large sum, {}", &_sum.to_string()[..10]);
 }
