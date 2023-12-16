@@ -5,8 +5,7 @@ pub fn problem_4() {
     let _min: u32 = 100;
     let _max: u32 = 999;
     let mut max_palindrome: u32 = 100;
-    let _l1 = (_min.._max).rev();
-    for _i in _l1{
+    for _i in (_min.._max).rev(){
         let mut _j = _i - 1;
         while _j>= _min {
             let _product = _i * _j;

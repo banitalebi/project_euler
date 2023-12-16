@@ -1,70 +1,62 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader};
+use std::fs;
 
 
 #[allow(unused)]
 pub fn problem_11() {
     // Problem 11: Largest Product in a Grid
     // https://projecteuler.net/problem=11
-    let mut grid:Vec<Vec<u32>> = Vec::new();
-    if let Ok(file) = File::open("src/data/p011.txt") {
-        let reader = BufReader::new(file);
-        for line in reader.lines() {
-            if let Ok(line) = line {
-                let mut row:Vec<u32>=Vec::new();
-                let row_data = line.split(" ");
-                for data in row_data{
-                    let item:u32= data.parse().unwrap();
-                    row.push(item);
-                }
-                grid.push(row);
-            }
-        }
+    let mut grid:[[u32; 2]; 20] = [[0, 20]; 20];
+    let data = fs::read_to_string("src/data/p011.txt").unwrap();   
+    for (i,line) in data.lines().enumerate(){        
+        let row_data: String= line.parse().unwrap();       
+        let row_data = line.split(" ");
+        for (j, data) in row_data.enumerate(){
+            let item:u32= data.parse().unwrap();
+            grid[i][j]=item;
+        }       
     }
+    
+    let steps:usize = 4;
     let mut _max: u32 = 0;    
     for i in 0..20{
-        for j in 0..17{
+        for j in 0..20-(steps-1){
             let mut _temp: u32 = 1;
-            _temp*=grid[j][i];
-            _temp*=grid[j+1][i];
-            _temp*=grid[j+2][i];
-            _temp*=grid[j+3][i];
+            for k in 0..steps{
+                _temp*=grid[j+k][i];
+            }
             if _max<_temp{
                 _max=_temp;
             }
         }
     }
     for i in 0..20{
-        for j in 0..17{
+        for j in 0..20-(steps-1){
             let mut _temp: u32 = 1;
-            _temp*=grid[i][j];
-            _temp*=grid[i][j+1];
-            _temp*=grid[i][j+2];
-            _temp*=grid[i][j+3];
+            for k in 0..steps{
+                _temp*=grid[i][j+k];
+            }
             if _max<_temp{
                 _max=_temp;
             }
         }
     }
-    for i in 3..20{
-        for j in 0..17{
+    for i in (steps-1)..20{
+        for j in 0..20-(steps-1){
             let mut _temp: u32 = 1;
-            _temp*=grid[i][j];
-            _temp*=grid[i-1][j+1];
-            _temp*=grid[i-2][j+2];
-            _temp*=grid[i-3][j+3];
+            for k in 0..steps{
+                _temp*=grid[i-k][j+k];
+            }
             if _max<_temp{
                 _max=_temp;
             }
         }
     }
-    for i in 0..17{
-        for j in 0..17{
+    for i in 0..20-(steps-1){
+        for j in 0..20-(steps-1){
             let mut _temp: u32 = 1;
-            _temp*=grid[i][j];
-            _temp*=grid[i+1][j+1];
-            _temp*=grid[i+2][j+2];
-            _temp*=grid[i+3][j+3];
+            for k in 0..steps{
+                _temp*=grid[i+k][j+k];
+            }
             if _max<_temp{
                 _max=_temp;
             }

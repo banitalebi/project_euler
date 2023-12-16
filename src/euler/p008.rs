@@ -1,5 +1,4 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader};
+use std::fs;
 
 
 #[allow(unused)]
@@ -7,14 +6,10 @@ pub fn problem_8() {
     // Problem 8: Largest Product in a Series
     // https://projecteuler.net/problem=8
     let mut s = String::new();
-    if let Ok(file) = File::open("src/data/p008.txt") {
-        let reader = BufReader::new(file);
-        for line in reader.lines() {
-            if let Ok(line) = line {
-                s.push_str(&line);
-            }
-        }
-    }
+    let data = fs::read_to_string("src/data/p008.txt").unwrap();
+    for line in data.lines(){
+        s.push_str(&line);
+    }   
     let target: u64 = 0;
     let mut _max: u64 = 1;
     for j in 13..(1000-12){
