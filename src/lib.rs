@@ -14,7 +14,7 @@ pub mod problem001 {
 }
 
 pub mod problem002 {
-    pub fn run()->u32 {
+    pub fn run() -> u32 {
         // Problem 2: Even Fibonacci Numbers
         // https://projecteuler.net/problem=2    
         let mut f0 = 2;
@@ -38,6 +38,32 @@ pub mod problem002 {
     }
 }
 
+pub mod problem003 {
+    pub fn run() -> u64{
+        // Problem 3: largest prime factor
+        // https://projecteuler.net/problem=3    
+        let l:u64 = 600_851_475_143;
+        largest_prime_factor(l)
+    }
+    
+    fn largest_prime_factor(n: u64) -> u64{
+        let mut i = 2;
+        let mut n = n;
+        while n > 1 {
+            if n % i == 0{
+                n /= i;
+            }
+            else if i * i > n{
+                i = n;
+            }
+            else {
+                i += 1;
+            }
+        }
+        i
+    }
+}
+
 
 #[cfg(test)]
 mod tests {
@@ -53,5 +79,11 @@ mod tests {
     fn problem002_test01() {
         let result = problem002::run();
         assert_eq!(result, 4613732);
+    }
+
+    #[test]    
+    fn problem003_test01() {
+        let result = problem003::run();
+        assert_eq!(result, 6857);
     }
 }
