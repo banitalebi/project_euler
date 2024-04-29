@@ -1,3 +1,5 @@
+use project_euler::problem001;
 fn main() {
-    println!("Hello, world!");
+    let result = problem001::run();
+    println!("{result}");
 }
