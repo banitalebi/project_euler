@@ -1,5 +1,5 @@
-use project_euler::problem004;
+use project_euler::problem005;
 fn main() {
-    let result = problem004::run();
+    let result = problem005::run();
     println!("{result}");
 }

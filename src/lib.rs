@@ -64,7 +64,6 @@ pub mod problem003 {
     }
 }
 
-
 pub mod problem004 {
     pub fn run() -> u32{
         // Problem 4: Largest Palindrome Product
@@ -102,6 +101,30 @@ pub mod problem004 {
     }
 }
 
+pub mod problem005 {
+    pub fn run() -> u32{
+        // Problem 5: smallest multiple
+        // https://projecteuler.net/problem=5
+        let mut num: u32 = 1;
+        loop {
+            if evenly_divisible(num, 20){
+                break;
+            }
+            num += 1
+        }   
+        num
+    }
+    
+    fn evenly_divisible(number: u32, max_divisor: u32) -> bool{
+        for i in 2..(max_divisor+1){
+            if number % i != 0{
+                return false;
+            }
+        }
+        true
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -114,7 +137,7 @@ mod tests {
 
     #[test]    
     fn problem002_test01() {
-        let result = problem002::run();
+        let result = problem002::run(); 
         assert_eq!(result, 4613732);
     }
 
@@ -128,5 +151,11 @@ mod tests {
     fn problem004_test01() {
         let result = problem004::run();
         assert_eq!(result, 906609);
+    }
+
+    #[test]    
+    fn problem005_test01() {
+        let result = problem005::run();
+        assert_eq!(result, 232792560);
     }
 }
