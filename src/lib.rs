@@ -125,6 +125,16 @@ pub mod problem005 {
     }
 }
 
+pub mod problem006 {
+    pub fn run() -> u32 {
+        // Problem 6: sum square difference
+        // https://projecteuler.net/problem=6
+        let num: u32 = 100;
+        let s: u32 = (num -1) * num * (num +1) * (3*num + 2) / 12;    
+        s
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -157,5 +167,11 @@ mod tests {
     fn problem005_test01() {
         let result = problem005::run();
         assert_eq!(result, 232792560);
+    }
+
+    #[test]    
+    fn problem006_test01() {
+        let result = problem006::run();
+        assert_eq!(result, 25164150);
     }
 }
