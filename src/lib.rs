@@ -32,7 +32,7 @@ pub mod problem002 {
         sum
     }
     
-    fn even_fibonacci(f0: u32, f1: u32)->u32{
+    fn even_fibonacci(f0: u32, f1: u32) -> u32{
         let f2 = f0 + 4 * f1;
         f2
     }
@@ -65,6 +65,43 @@ pub mod problem003 {
 }
 
 
+pub mod problem004 {
+    pub fn run() -> u32{
+        // Problem 4: Largest Palindrome Product
+        // https://projecteuler.net/problem=4
+        let min: u32 = 100;
+        let max: u32 = 999;
+        let mut max_palindrome: u32 = 100;
+        for i in (min..max).rev(){
+            let mut j = i - 1;
+            while j>= min {
+                let product: u32 = i * j;
+                if is_palindrome(product){
+                    if max_palindrome < product{
+                        max_palindrome = product;
+                    }               
+                }
+                j -= 1;
+            }
+        }
+        max_palindrome
+    }
+    
+    fn is_palindrome(i: u32) -> bool {
+        let s = i.to_string();
+        let mut left = 0;
+        let mut right = s.len();
+        while left < right{
+            if &s[left..(left+1)] != &s[(right-1)..right]{
+                return false;
+            }
+            left += 1;
+            right -= 1;
+        }  
+        true
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -85,5 +122,11 @@ mod tests {
     fn problem003_test01() {
         let result = problem003::run();
         assert_eq!(result, 6857);
+    }
+
+    #[test]    
+    fn problem004_test01() {
+        let result = problem004::run();
+        assert_eq!(result, 906609);
     }
 }
