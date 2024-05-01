@@ -35,11 +35,7 @@ pub mod problem003 {
     pub fn run() -> u64{
         // Problem 3: largest prime factor
         // https://projecteuler.net/problem=3    
-        let l:u64 = 600_851_475_143;
-        largest_prime_factor(l)
-    }
-    
-    fn largest_prime_factor(n: u64) -> u64{
+        let n:u64 = 600_851_475_143;
         let mut i = 2;
         let mut n = n;
         while n > 1 {
