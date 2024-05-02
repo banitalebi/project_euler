@@ -5,8 +5,7 @@ pub mod problem001 {
         let arithmetic_progression = |n:u32| n * (n + 1)/2;
         3 * arithmetic_progression(333) + 
         5 * arithmetic_progression(199) - 
-        15 * arithmetic_progression(66)
-        
+        15 * arithmetic_progression(66)        
     }
 }
 
@@ -63,7 +62,7 @@ pub mod problem004 {
         for i in (min..max).rev(){
             let mut j = i - 1;
             while j>= min {
-                let product: u32 = i * j;
+                let product = i * j;
                 if is_palindrome(product){
                     if max_palindrome < product{
                         max_palindrome = product;
@@ -118,9 +117,8 @@ pub mod problem006 {
     pub fn run() -> u32 {
         // Problem 6: sum square difference
         // https://projecteuler.net/problem=6
-        let num: u32 = 100;
-        let s: u32 = (num -1) * num * (num +1) * (3*num + 2) / 12;    
-        s
+        let n: u32 = 100;
+        (n - 1)*n*(n + 1)*(3*n + 2)/12
     }
 }
 
