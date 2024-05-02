@@ -156,6 +156,35 @@ pub mod problem007 {
     }
 }
 
+pub mod problem008 {
+    use std::fs;
+    pub fn run() -> u64 {
+        // Problem 8: Largest Product in a Series
+        // https://projecteuler.net/problem=8
+        let mut s = String::new();
+        let data = fs::read_to_string("src/data/p008.txt").unwrap();
+        for line in data.lines(){
+            s.push_str(&line);
+        }   
+        let target: u64 = 0;
+        let mut max: u64 = 1;
+        for j in 13..(1000-12){
+            let s = &s[(j-13)..j];
+            let nums: Vec<u64> = s.chars().map(|c| c.to_digit(10).unwrap() as u64).collect();             
+            let mut temp_max: u64 = 1;
+            if !nums.contains(&target){
+                for i in nums{
+                    temp_max *= i;      
+                }  
+                if max<temp_max{
+                    max=temp_max;
+                }            
+            }        
+        }
+        max
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -201,4 +230,11 @@ mod tests {
         let result = problem007::run();
         assert_eq!(result, 104743);
     }
+
+    #[test]    
+    fn problem008_test01() {
+        let result = problem008::run();
+        assert_eq!(result, 23514624000); 
+    }
+
 }
