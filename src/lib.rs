@@ -186,7 +186,7 @@ pub mod problem008 {
 }
 
 pub mod problem009 {
-    pub fn run() -> u32  {
+    pub fn run() -> u32 {
         // Problem 9: Special Pythagorean Triplet
         // https://projecteuler.net/problem=9
         let mut p =0;
@@ -205,6 +205,35 @@ pub mod problem009 {
     }
 }
 
+pub mod problem010 {
+    pub fn run() -> u64 {
+        // Problem 10: Summation of Primes
+        // https://projecteuler.net/problem=10
+        let mut sum: u64 = 0;
+        let mut num: u64 = 2;
+        while num<2_000_000{
+            if is_prime(num){
+                sum+=num;
+            }
+            num+=1;
+        }    
+        sum
+    }
+    
+    fn is_prime(number: u64)->bool{
+        if number <= 1{
+            return false;
+        }
+        let mut i = 2;    
+        while i*i <= number{
+            if number%i==0{
+                return false;
+            }
+            i+=1;
+        }
+        true
+    }
+}
 
 #[cfg(test)]
 mod tests {
@@ -262,6 +291,12 @@ mod tests {
     fn problem009_test01() {
         let result = problem009::run();
         assert_eq!(result, 31875000); 
+    }
+
+    #[test]    
+    fn problem010_test01() {
+        let result = problem010::run();
+        assert_eq!(result, 142913828922); 
     }
 
 }
