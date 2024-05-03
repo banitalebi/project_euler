@@ -235,6 +235,72 @@ pub mod problem010 {
     }
 }
 
+pub mod problem011 {
+    use std::fs;
+    pub fn run() -> u32 {
+        // Problem 11: Largest Product in a Grid
+        // https://projecteuler.net/problem=11
+        let mut grid:[[u32; 20]; 20] = [[0; 20]; 20];
+        let data = fs::read_to_string("src/data/p011.txt").unwrap();   
+        for (i,line) in data.lines().enumerate(){        
+            let row_data: String= line.parse().unwrap();       
+            let row_data = row_data.split(" ");
+            for (j, data) in row_data.enumerate(){
+                let item:u32= data.parse().unwrap();
+                grid[i][j]=item;
+            }       
+        }
+        
+        let steps:usize = 4;
+        let mut max: u32 = 0;    
+        for i in 0..20{
+            for j in 0..20-(steps-1){
+                let mut temp: u32 = 1;
+                for k in 0..steps{
+                    temp*=grid[j+k][i];
+                }
+                if max<temp{
+                    max=temp;
+                }
+            }
+        }
+        for i in 0..20{
+            for j in 0..20-(steps-1){
+                let mut temp: u32 = 1;
+                for k in 0..steps{
+                    temp*=grid[i][j+k];
+                }
+                if max<temp{
+                    max=temp;
+                }
+            }
+        }
+        for i in (steps-1)..20{
+            for j in 0..20-(steps-1){
+                let mut temp: u32 = 1;
+                for k in 0..steps{
+                    temp*=grid[i-k][j+k];
+                }
+                if max<temp{
+                    max=temp;
+                }
+            }
+        }
+        for i in 0..20-(steps-1){
+            for j in 0..20-(steps-1){
+                let mut temp: u32 = 1;
+                for k in 0..steps{
+                    temp*=grid[i+k][j+k];
+                }
+                if max<temp{
+                    max=temp;
+                }
+            }
+        }
+        max
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -299,4 +365,9 @@ mod tests {
         assert_eq!(result, 142913828922); 
     }
 
+    #[test]    
+    fn problem011_test01() {
+        let result = problem011::run();
+        assert_eq!(result, 70600674); 
+    }
 }
