@@ -1,11 +1,16 @@
 pub mod problem001 {
-    pub fn run() -> u32 {
+    pub fn run(n: i32) -> i32 {
         // Problem 1: Multiples of 3 or 5
         // https://projecteuler.net/problem=1
-        let arithmetic_progression = |n:u32| n * (n + 1)/2;
-        3 * arithmetic_progression(333) + 
-        5 * arithmetic_progression(199) - 
-        15 * arithmetic_progression(66)        
+        let arithmetic_progression = |n| n*(n+1)/2;
+        [3, 5, 3*5]
+        .map(|x| match x {
+            3 => 3*arithmetic_progression((n-1)/3),
+            5 => 5*arithmetic_progression((n-1)/5),
+            15 => -1*15*arithmetic_progression((n-1)/15),
+            _ => 0})
+        .iter()
+        .sum()        
     }
 }
 
@@ -307,10 +312,13 @@ mod tests {
 
     #[test]    
     fn problem001_test01() {
-        let result = problem001::run();
-        assert_eq!(result, 233168);
+        assert_eq!(problem001::run(10), 23);
     }
 
+    #[test]    
+    fn problem001_test02() {
+        assert_eq!(problem001::run(1000), 233168);
+    }
     #[test]    
     fn problem002_test01() {
         let result = problem002::run(); 
