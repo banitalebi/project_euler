@@ -8,8 +8,7 @@ pub mod problem001 {
         .map(|x| match x {
             3 => collecte(3),
             5 => collecte(5),
-            15 => -1*collecte(15),
-            _ => 0})
+            _ => -1*collecte(15)})
         .iter()
         .sum()
     }
