@@ -2,15 +2,16 @@ pub mod problem001 {
     pub fn run(n: i32) -> i32 {
         // Problem 1: Multiples of 3 or 5
         // https://projecteuler.net/problem=1
-        let arithmetic_progression = |n| n*(n+1)/2;
+        let arithmetic_progression = |x| x*(x+1)/2;
+        let collecte = |x: i32| x*arithmetic_progression((n-1)/x);
         [3, 5, 3*5]
         .map(|x| match x {
-            3 => 3*arithmetic_progression((n-1)/3),
-            5 => 5*arithmetic_progression((n-1)/5),
-            15 => -1*15*arithmetic_progression((n-1)/15),
+            3 => collecte(3),
+            5 => collecte(5),
+            15 => -1*collecte(15),
             _ => 0})
         .iter()
-        .sum()        
+        .sum()
     }
 }
 
