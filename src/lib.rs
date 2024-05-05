@@ -3,12 +3,12 @@ pub mod problem001 {
         // Problem 1: Multiples of 3 or 5
         // https://projecteuler.net/problem=1
         let arithmetic_progression = |x| x*(x+1)/2;
-        let collecte = |x: i32| x*arithmetic_progression((n-1)/x);
+        let sum_divisible_by = |x: i32| x*arithmetic_progression((n-1)/x);
         [3, 5, 3*5]
         .map(|x| match x {
-            3 => collecte(3),
-            5 => collecte(5),
-            _ => -1*collecte(15)})
+            3 => sum_divisible_by(3),
+            5 => sum_divisible_by(5),
+            _ => -1*sum_divisible_by(15)})
         .iter()
         .sum()
     }
