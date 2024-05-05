@@ -14,11 +14,12 @@ pub mod problem001 {
     }
 }
 
+
 pub mod problem002 {
     pub fn run(n: i32) -> i32 {
         Fibonacci::new()
         .take_while(|&x| x<n)
-        .filter(|x| x%2 == 0)
+        .filter(|&x| x%2 == 0)
         .sum()
     }
     struct Fibonacci {
@@ -33,7 +34,7 @@ pub mod problem002 {
     }    
     impl Iterator for Fibonacci {
         type Item = i32;    
-        fn next(&mut self) -> Option<i32> {
+        fn next(&mut self) -> Option<Self::Item> {
             self.last = self.now + self.next;
             self.now = self.last + self.next;
             self.next = self.last + self.now;    
@@ -44,26 +45,41 @@ pub mod problem002 {
 
 
 pub mod problem003 {
-    pub fn run() -> u64{
+    pub fn run(n: u64) -> u64{
         // Problem 3: largest prime factor
-        // https://projecteuler.net/problem=3    
-        let n:u64 = 600_851_475_143;
-        let mut i = 2;
-        let mut n = n;
-        while n > 1 {
-            if n % i == 0{
-                n /= i;
-            }
-            else if i * i > n{
-                i = n;
-            }
-            else {
-                i += 1;
+        // https://projecteuler.net/problem=3
+        Prime::new(n).max().unwrap()
+    }
+    struct Prime {
+        number: u64,
+        factor: u64
+    }
+
+    impl Prime {
+        fn new(n: u64) -> Self {
+            Prime {number: n, factor: 2}
+        }
+    }    
+
+    impl Iterator for Prime {
+        type Item = u64;    
+        fn next(&mut self) -> Option<Self::Item> {
+            match self.number {
+                0|1 => None,
+                _ => {                
+                    if self.number%self.factor == 0{
+                        self.number/=self.factor;}
+                    else if self.factor*self.factor>self.number{
+                        self.factor=self.number;}
+                    else {
+                        self.factor+=1;}    
+                    Some(self.factor)
+                    }
             }
         }
-        i
     }
 }
+
 
 pub mod problem004 {
     pub fn run() -> u32{
@@ -340,8 +356,12 @@ mod tests {
 
     #[test]    
     fn problem003_test01() {
-        let result = problem003::run();
-        assert_eq!(result, 6857);
+        assert_eq!(problem003::run(13_195), 29);
+    }
+
+    #[test]    
+    fn problem003_test02() {
+        assert_eq!(problem003::run(600_851_475_143), 6_857);
     }
 
     #[test]    
