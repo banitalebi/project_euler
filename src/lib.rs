@@ -15,25 +15,33 @@ pub mod problem001 {
 }
 
 pub mod problem002 {
-    pub fn run() -> u32 {
-        // Problem 2: Even Fibonacci Numbers
-        // https://projecteuler.net/problem=2    
-        let mut f0 = 2;
-        let mut f1 = 8;
-        let mut sum = f0 + f1;
-        let even_fibonacci = |f0: u32, f1: u32| f0 + 4*f1;
-        loop  {
-            let f2 = even_fibonacci(f0, f1);                
-            if f2 > 4_000_000{
-                break;
-            }
-            sum += f2;
-            f0 = f1;
-            f1 = f2;            
-        }    
-        sum
+    pub fn run(n: i32) -> i32 {
+        Fibonacci::new()
+        .take_while(|&x| x<n)
+        .filter(|x| x%2 == 0)
+        .sum()
+    }
+    struct Fibonacci {
+        last: i32,
+        now: i32,
+        next: i32
+    }    
+    impl Fibonacci {
+        fn new() -> Self {
+            Fibonacci {last: 0, now: 1 , next: 0}
+        }
+    }    
+    impl Iterator for Fibonacci {
+        type Item = i32;    
+        fn next(&mut self) -> Option<i32> {
+            self.last = self.now + self.next;
+            self.now = self.last + self.next;
+            self.next = self.last + self.now;    
+            Some(self.next)
+        }
     }
 }
+
 
 pub mod problem003 {
     pub fn run() -> u64{
@@ -317,12 +325,17 @@ mod tests {
 
     #[test]    
     fn problem001_test02() {
-        assert_eq!(problem001::run(1000), 233168);
+        assert_eq!(problem001::run(1_000), 233_168);
     }
+    
     #[test]    
     fn problem002_test01() {
-        let result = problem002::run(); 
-        assert_eq!(result, 4613732);
+        assert_eq!(problem002::run(100), 44);
+    }
+
+    #[test]    
+    fn problem002_test02() {
+        assert_eq!(problem002::run(4_000_000), 4_613_732);
     }
 
     #[test]    
