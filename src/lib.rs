@@ -92,43 +92,43 @@ pub mod problem004 {
 
     struct Palindrome {
         min: u32,
-        i: u32,
-        num: u32    
+        step: u32,
+        rep: u32    
     }
 
     struct Product {
         min: u32,
-        i: u32,
-        j: u32,
-        num: u32    
+        stage: u32,
+        back: u32,
+        item: u32    
     }
 
     impl Palindrome {
         fn new(min: u32, max: u32) -> Self {
-            Palindrome {min, i: max, num: 0}
+            Palindrome {min, step: max, rep: 0}
         }
     }
 
     impl Product {
-        fn new(min: u32, i: u32, j: u32) -> Self {
-            Product {min, i, j, num: 0}
+        fn new(min: u32, stage: u32, back: u32) -> Self {
+            Product {min, stage, back, item: 0}
         }
     }
 
     impl Iterator for Palindrome {
         type Item = u32;    
         fn next(&mut self) -> Option<Self::Item> {
-            match self.i>=self.min {
+            match self.step>=self.min {
                 false => None,
                 true => {       
-                    self.num = match Product::new(self.min, self.i, self.i - 1)
+                    self.rep = match Product::new(self.min, self.step, self.step - 1)
                     .filter(|&x| is_palindrome(x))
                     .max(){
                         Some(x)=>x,
                         None => 0
                     };            
-                    self.i -= 1;
-                    Some(self.num)
+                    self.step -= 1;
+                    Some(self.rep)
                     }
             }
         }
@@ -137,12 +137,12 @@ pub mod problem004 {
     impl Iterator for Product {
         type Item = u32;    
         fn next(&mut self) -> Option<Self::Item> {
-            match self.j>=self.min {
+            match self.back>=self.min {
                 false => None,
                 true => {             
-                    self.num = self.i * self.j;
-                    self.j -= 1;
-                    Some(self.num)
+                    self.item = self.stage * self.back;
+                    self.back -= 1;
+                    Some(self.item)
                     }
             }
         }
