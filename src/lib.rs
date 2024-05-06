@@ -82,27 +82,72 @@ pub mod problem003 {
 
 
 pub mod problem004 {
-    pub fn run() -> u32{
+    pub fn run(n: u32) -> u32{
         // Problem 4: Largest Palindrome Product
         // https://projecteuler.net/problem=4
-        let min: u32 = 100;
-        let max: u32 = 999;
-        let mut max_palindrome: u32 = 100;
-        for i in (min..max).rev(){
-            let mut j = i - 1;
-            while j>= min {
-                let product = i * j;
-                if is_palindrome(product){
-                    if max_palindrome < product{
-                        max_palindrome = product;
-                    }               
-                }
-                j -= 1;
+        let min: u32 = 10u32.pow(n-1);
+        let max: u32 = 10u32.pow(n);
+        Palindrome::new(min, max).max().unwrap()
+    }
+
+    struct Palindrome {
+        min: u32,
+        i: u32,
+        num: u32    
+    }
+
+    struct Product {
+        min: u32,
+        i: u32,
+        j: u32,
+        num: u32    
+    }
+
+    impl Palindrome {
+        fn new(min: u32, max: u32) -> Self {
+            Palindrome {min, i: max, num: 0}
+        }
+    }
+
+    impl Product {
+        fn new(min: u32, i: u32, j: u32) -> Self {
+            Product {min, i, j, num: 0}
+        }
+    }
+
+    impl Iterator for Palindrome {
+        type Item = u32;    
+        fn next(&mut self) -> Option<Self::Item> {
+            match self.i>=self.min {
+                false => None,
+                true => {       
+                    self.num = match Product::new(self.min, self.i, self.i - 1)
+                    .filter(|&x| is_palindrome(x))
+                    .max(){
+                        Some(x)=>x,
+                        None => 0
+                    };            
+                    self.i -= 1;
+                    Some(self.num)
+                    }
             }
         }
-        max_palindrome
     }
-    
+
+    impl Iterator for Product {
+        type Item = u32;    
+        fn next(&mut self) -> Option<Self::Item> {
+            match self.j>=self.min {
+                false => None,
+                true => {             
+                    self.num = self.i * self.j;
+                    self.j -= 1;
+                    Some(self.num)
+                    }
+            }
+        }
+    }
+
     fn is_palindrome(i: u32) -> bool {
         let s = i.to_string();
         let mut left = 0;
@@ -117,6 +162,8 @@ pub mod problem004 {
         true
     }
 }
+
+
 
 pub mod problem005 {
     pub fn run() -> u32{
@@ -366,8 +413,12 @@ mod tests {
 
     #[test]    
     fn problem004_test01() {
-        let result = problem004::run();
-        assert_eq!(result, 906609);
+        assert_eq!(problem004::run(2), 9_009);
+    }
+
+    #[test]    
+    fn problem004_test02() {
+        assert_eq!(problem004::run(3), 906_609);
     }
 
     #[test]    
