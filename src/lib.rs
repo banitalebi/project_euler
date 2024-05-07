@@ -269,18 +269,19 @@ pub mod problem008 {
 
 
 pub mod problem009 {
-    pub fn run() -> u32 {
+    pub fn run(n: u32) -> u32 {
         // Problem 9: Special Pythagorean Triplet
         // https://projecteuler.net/problem=9
         let mut p =0;
-        for a in 1..333{
-            for b in a+1..500{
-                let c = 1000 - ( a + b );
+        for a in 1..1+(n-3)/3{
+            for b in 1+a..1+(n-a)/2{
+                let c = n - (a + b);
                 if c<=b{
                     continue;
                 }
                 if a*a+b*b==c*c{
                     p=a*b*c;
+                    break;
                 }         
             }
         }      
@@ -470,9 +471,14 @@ mod tests {
 
     #[test]    
     fn problem009_test01() {
-        let result = problem009::run();
-        assert_eq!(result, 31875000); 
+        assert_eq!(problem009::run(12), 60); 
     }
+
+    #[test]    
+    fn problem009_test02() {
+        assert_eq!(problem009::run(1_000), 31_875_000); 
+    }
+
 
     #[test]    
     fn problem010_test01() {
