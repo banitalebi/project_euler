@@ -17,6 +17,8 @@ pub mod problem001 {
 
 pub mod problem002 {
     pub fn run(n: i32) -> i32 {
+        // Problem 2: Even Fibonacci Numbers
+        // https://projecteuler.net/problem=2
         Fibonacci::new()
         .take_while(|&x| x<n)
         .filter(|&x| x%2 == 0)
@@ -164,14 +166,13 @@ pub mod problem004 {
 }
 
 
-
 pub mod problem005 {
-    pub fn run() -> u32{
+    pub fn run(n: u32) -> u32{
         // Problem 5: smallest multiple
         // https://projecteuler.net/problem=5
         let mut num: u32 = 1;
         loop {
-            if evenly_divisible(num, 20){
+            if evenly_divisible(num, n){
                 break;
             }
             num += 1
@@ -423,8 +424,12 @@ mod tests {
 
     #[test]    
     fn problem005_test01() {
-        let result = problem005::run();
-        assert_eq!(result, 232792560);
+        assert_eq!(problem005::run(10), 2_520);
+    }
+
+    #[test]    
+    fn problem005_test02() {
+        assert_eq!(problem005::run(20), 232_792_560);
     }
 
     #[test]    
