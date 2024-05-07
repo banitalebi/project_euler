@@ -7,7 +7,7 @@ Project Euler is a set of tricky math and computer puzzles. To solve them, you n
 ## How to contribute?
 - Fork this repository.
 - Choose one of the problems.
-- If the problem has already been addressed in this repository, strive to offer an improved solution; otherwise, share your insights.
+- If the problem has already been addressed in this repository, try to offer an improved solution; otherwise, share your insights.
 - Code your algorithm exclusively in [Rust](https://www.rust-lang.org/).
 - For instance, if you are solving Problem 1, add or update the following module in the lib.rs file.
 ```
@@ -18,7 +18,7 @@ pub mod problem001 {
         // --snip--
     }
     
-    // All the helper functions for this algorithm are privately defined here.
+    // All the helper structs or functions for this algorithm are privately defined here.
 }
 ```
 - Update the necessary test cases accordingly as below,
@@ -39,4 +39,4 @@ mod tests {
 ```
 - Send a PR
 
-Happy Contributing! 😃
+
