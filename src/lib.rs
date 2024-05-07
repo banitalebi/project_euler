@@ -175,7 +175,7 @@ pub mod problem005 {
             if evenly_divisible(num, n){
                 break;
             }
-            num += 1
+            num += 1;
         }   
         num
     }
@@ -201,10 +201,9 @@ pub mod problem006 {
 
 
 pub mod problem007 {
-    pub fn run() -> u32 {
+    pub fn run(number: u32) -> u32 {
         // Problem 7: 10_001 st Prime
         // https://projecteuler.net/problem=7
-        let number: u32 = 10_001;
         let mut counter: u32 = 0;
         let mut item: u32 = 1;
         loop{
@@ -443,11 +442,14 @@ mod tests {
         assert_eq!(problem006::run(100), 25_164_150);
     }
 
-
     #[test]    
     fn problem007_test01() {
-        let result = problem007::run();
-        assert_eq!(result, 104743);
+        assert_eq!(problem007::run(6), 13);
+    }
+
+    #[test]    
+    fn problem007_test02() {
+        assert_eq!(problem007::run(10_001), 104_743);
     }
 
     #[test]    
