@@ -439,6 +439,51 @@ pub mod problem013 {
 }
 
 
+pub mod problem014 {
+    // Problem 14: Longest Collatz sequence
+    // https://projecteuler.net/problem=14
+    pub fn run(number: u64) -> u64 {
+        let mut best_origin: u64 = 0;
+        let mut best_record: u64 = 0;            
+        for current_origin in 0..number {
+            let current_record: u64 = Collatz::new(current_origin).count() as u64;
+            if best_record < current_record {
+                best_origin = current_origin;
+                best_record = current_record;
+            }
+        }
+        best_origin
+    }   
+
+    struct Collatz {
+        item: u64,
+    }
+
+    impl Collatz {
+        fn new(origin: u64) -> Self {
+            Self { item: origin }
+        }
+    }
+
+    impl Iterator for Collatz {
+        type Item = u64;
+        fn next(&mut self) -> Option<Self::Item> {
+            match self.item {
+                0 | 1 => None,
+                _ => {
+                    let this_item = self.item;
+                    self.item = match this_item%2 {
+                        0 => this_item/2,
+                        _ => 3*this_item+1,
+                    };
+                    Some(this_item)
+                }
+            }
+        }
+    }    
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -567,6 +612,11 @@ mod tests {
     #[test]    
     fn problem013_test01() {
         assert_eq!(problem013::run(), "5537376230"); 
+    }
+
+    #[test]    
+    fn problem014_test01() {
+        assert_eq!(problem014::run(1_000_000), 837_799); 
     }
 
 }
