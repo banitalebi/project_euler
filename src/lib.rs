@@ -290,12 +290,12 @@ pub mod problem009 {
 }
 
 pub mod problem010 {
-    pub fn run() -> u64 {
+    pub fn run(number: u64) -> u64 {
         // Problem 10: Summation of Primes
         // https://projecteuler.net/problem=10
         let mut sum: u64 = 0;
         let mut num: u64 = 2;
-        while num<2_000_000{
+        while num<number{
             if is_prime(num){
                 sum+=num;
             }
@@ -482,8 +482,12 @@ mod tests {
 
     #[test]    
     fn problem010_test01() {
-        let result = problem010::run();
-        assert_eq!(result, 142913828922); 
+        assert_eq!(problem010::run(10), 17); 
+    }
+
+    #[test]    
+    fn problem010_test02() {
+        assert_eq!(problem010::run(2_000_000), 142_913_828_922); 
     }
 
     #[test]    
