@@ -422,6 +422,23 @@ pub mod problem012 {
 }
 
 
+pub mod problem013 {
+    use std::fs;
+    pub fn run() -> String {
+        // Problem 13: Large sum
+        // https://projecteuler.net/problem=13
+        let path = "src/data/p013.txt";
+        let data = fs::read_to_string(path).unwrap();
+        let mut sum: f64 = 0.0;
+        for line in data.lines(){
+            let num: f64 = line.parse().unwrap();
+            sum+=num;       
+        }  
+        sum.to_string().chars().take(10).collect::<String>()
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -546,4 +563,10 @@ mod tests {
     fn problem012_test02() {
         assert_eq!(problem012::run(500), 76_576_500); 
     }
+
+    #[test]    
+    fn problem013_test01() {
+        assert_eq!(problem013::run(), "5537376230"); 
+    }
+
 }
