@@ -319,13 +319,15 @@ pub mod problem010 {
     }
 }
 
+
 pub mod problem011 {
     use std::fs;
-    pub fn run() -> u32 {
+    pub fn run(steps: usize) -> u32 {
         // Problem 11: Largest Product in a Grid
         // https://projecteuler.net/problem=11
         let mut grid:[[u32; 20]; 20] = [[0; 20]; 20];
-        let data = fs::read_to_string("src/data/p011.txt").unwrap();   
+        let path = "src/data/p011.txt";
+        let data = fs::read_to_string(path).unwrap();   
         for (i,line) in data.lines().enumerate(){        
             let row_data: String= line.parse().unwrap();       
             let row_data = row_data.split(" ");
@@ -335,7 +337,6 @@ pub mod problem011 {
             }       
         }
         
-        let steps:usize = 4;
         let mut max: u32 = 0;    
         for i in 0..20{
             for j in 0..20-(steps-1){
@@ -492,7 +493,11 @@ mod tests {
 
     #[test]    
     fn problem011_test01() {
-        let result = problem011::run();
-        assert_eq!(result, 70600674); 
+        assert_eq!(problem011::run(1), 99); 
+    }
+
+    #[test]    
+    fn problem011_test02() {
+        assert_eq!(problem011::run(4), 70_600_674); 
     }
 }
