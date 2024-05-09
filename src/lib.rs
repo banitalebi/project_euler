@@ -289,6 +289,7 @@ pub mod problem009 {
     }
 }
 
+
 pub mod problem010 {
     pub fn run(number: u64) -> u64 {
         // Problem 10: Summation of Primes
@@ -385,6 +386,41 @@ pub mod problem011 {
         max
     }
 }
+
+
+pub mod problem012 {
+    pub fn run(number: u32) -> u32 {
+        // Problem 12: highly divisible triangular number
+        // https://projecteuler.net/problem=12
+        let mut triangular: u32 = 0;
+        let mut i:u32 = 1;    
+        loop{
+            triangular+=i;        
+            if count_factors(triangular)>=number{
+                break;
+            }
+            i+=1;
+        }
+        triangular
+    }
+    
+    fn count_factors(number: u32) -> u32{
+        if number==1{
+            return 1;
+        }
+        let mut count: u32 = 0;
+        for i in 1..number{
+            if i*i>number{
+                break;
+            }
+            if number%i==0{
+                count +=2;
+            }
+        }
+        return count;
+    }    
+}
+
 
 #[cfg(test)]
 mod tests {
@@ -499,5 +535,15 @@ mod tests {
     #[test]    
     fn problem011_test02() {
         assert_eq!(problem011::run(4), 70_600_674); 
+    }
+
+    #[test]    
+    fn problem012_test01() {
+        assert_eq!(problem012::run(5), 28); 
+    }
+
+    #[test]    
+    fn problem012_test02() {
+        assert_eq!(problem012::run(500), 76_576_500); 
     }
 }
