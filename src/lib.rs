@@ -484,6 +484,22 @@ pub mod problem014 {
 }
 
 
+pub mod problem015 {
+    // Problem 15: Lattice Paths
+    // https://projecteuler.net/problem=15
+    use gcd::Gcd;
+    pub fn run() -> u64 {
+        (21..=40).zip(1..=20)
+        .fold((1u64, 1u64), |(num, deno), (n, d)| {
+            let num:u64 = num * n;
+            let deno:u64 = deno * d;
+            let g = num.gcd(deno);
+            (num/g, deno/g)
+        }).0
+    }    
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -617,6 +633,11 @@ mod tests {
     #[test]    
     fn problem014_test01() {
         assert_eq!(problem014::run(1_000_000), 837_799); 
+    }
+
+    #[test]    
+    fn problem015_test01() {
+        assert_eq!(problem015::run(), 137_846_528_820); 
     }
 
 }
