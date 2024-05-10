@@ -522,7 +522,6 @@ pub mod problem016 {
             powf(exponent.into()).
             log10().
             floor() as usize;
-            // let maxdigit:usize = 500;
             let mut factors:Vec<u32> = vec![0; maxdigit];
             factors[0]=1;
             Digit {exponent, current: 1, carry: 0, maxdigit, factors, sum:0}
