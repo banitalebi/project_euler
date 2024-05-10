@@ -500,6 +500,61 @@ pub mod problem015 {
 }
 
 
+pub mod problem016 {
+    // Problem 16: Power digit sum
+    // https://projecteuler.net/problem=16
+    pub fn run(exponent:u32) -> u32 {
+        Digit::new(exponent).last().unwrap()
+    }
+
+    struct Digit {
+        exponent: u32,
+        current: u32,
+        carry: u32,
+        maxdigit: usize,
+        factors: Vec<u32>,
+        sum:u32
+    }
+
+    impl Digit {
+        fn new(exponent:u32) -> Self {
+            let maxdigit = 1 + (2.0f64).
+            powf(exponent.into()).
+            log10().
+            floor() as usize;
+            // let maxdigit:usize = 500;
+            let mut factors:Vec<u32> = vec![0; maxdigit];
+            factors[0]=1;
+            Digit {exponent, current: 1, carry: 0, maxdigit, factors, sum:0}
+        }
+    }    
+
+    impl Iterator for Digit {
+        type Item = u32;    
+        fn next(&mut self) -> Option<Self::Item> {
+            match self.current <= self.exponent {
+                false => None,
+                true => {                
+                    for j in 0..self.maxdigit {
+                        let temp:u32 = 2 * self.factors[j] + self.carry;
+                        self.carry = 0;
+                        if temp>9{
+                            self.factors[j] = temp % 10;
+                            self.carry = temp/10;
+                        }else{
+                            self.factors[j] = temp;
+                        }
+                    }
+                    self.sum = self.factors.iter().sum();
+                    self.current+=1;
+                    Some(self.sum)
+                    }
+            }
+        }
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -648,6 +703,36 @@ mod tests {
     #[test]    
     fn problem015_test03() {
         assert_eq!(problem015::run(20), 137_846_528_820); 
+    }
+
+    #[test]    
+    fn problem016_test01() {
+        assert_eq!(problem016::run(1), 2); 
+    }
+
+    #[test]    
+    fn problem016_test02() {
+        assert_eq!(problem016::run(2), 4); 
+    }
+
+    #[test]    
+    fn problem016_test03() {
+        assert_eq!(problem016::run(3), 8); 
+    }
+
+    #[test]    
+    fn problem016_test04() {
+        assert_eq!(problem016::run(4), 7); 
+    }
+
+    #[test]    
+    fn problem016_test05() {
+        assert_eq!(problem016::run(15), 26); 
+    }
+
+    #[test]    
+    fn problem016_test06() {
+        assert_eq!(problem016::run(1_000), 1_366); 
     }
 
 }
