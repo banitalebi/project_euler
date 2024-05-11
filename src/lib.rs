@@ -518,10 +518,10 @@ pub mod problem016 {
 
     impl Digit {
         fn new(exponent:u32) -> Self {
-            let maxdigit = 1 + (2.0f64).
-            powf(exponent.into()).
-            log10().
-            floor() as usize;
+            let maxdigit = 1 + (2.0f64)
+            .powf(exponent.into())
+            .log10()
+            .floor() as usize;
             let mut factors:Vec<u32> = vec![0; maxdigit];
             factors[0]=1;
             Digit {exponent, current: 1, carry: 0, maxdigit, factors, sum:0}
