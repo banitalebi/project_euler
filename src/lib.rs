@@ -554,6 +554,93 @@ pub mod problem016 {
 }
 
 
+pub mod problem017 {
+    // Problem 17: Number Letter Counts
+    // https://projecteuler.net/problem=17
+    pub fn run(num: u32) -> usize {
+        let count_words = |s:String| s.chars().filter(|&c| c!=' ').count();
+        (1..=num)
+        .map(spell_numbers)
+        .map(count_words)
+        .sum()
+    }
+
+    fn handle_units(num: u32) -> String {
+        match num {
+            1 => "one",
+            2 => "two",
+            3 => "three",
+            4 => "four",
+            5 => "five",
+            6 => "six",
+            7 => "seven",
+            8 => "eight",
+            9 => "nine",
+            _ => "",
+        }.to_string()
+    }
+    
+    fn handle_teens(num: u32) -> String {
+        if num<10 {
+            return handle_units(num);
+        }
+        match num {
+            10 => "ten",
+            11 => "eleven",
+            12 => "twelve",
+            13 => "thirteen",
+            14 => "fourteen",
+            15 => "fifteen",
+            16 => "sixteen",
+            17 => "seventeen",
+            18 => "eighteen",
+            19 => "nineteen",
+            _ => "",
+        }.to_string()
+    }
+    
+    fn handle_tens(num: u32) -> String {
+        if num<20 {
+            return handle_teens(num);
+        }
+        let tens = match num/10 {
+            2 => "twenty",
+            3 => "thirty",
+            4 => "forty",
+            5 => "fifty",
+            6 => "sixty",
+            7 => "seventy",
+            8 => "eighty",
+            9 => "ninety",
+            _ => "",
+        }.to_string();
+        if num%10 != 0 {
+            format!("{} {}", tens, handle_units(num%10))
+        } else {
+            tens
+        }
+    }
+    
+    fn handle_hundreds(num: u32) -> String {
+        if num<100 {
+            return handle_tens(num);
+        }
+        let hundreds = format!("{} hundred", handle_units(num/100));
+        if num%100 != 0 {
+            format!("{} and {}", hundreds, handle_tens(num%100))
+        } else {
+            hundreds
+        }
+    }
+    
+    fn spell_numbers(num: u32) -> String {
+        if num<1000 {
+            return handle_hundreds(num);
+        }
+        "one thousand".to_string()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -732,6 +819,41 @@ mod tests {
     #[test]    
     fn problem016_test06() {
         assert_eq!(problem016::run(1_000), 1_366); 
+    }
+
+    #[test]    
+    fn problem017_test01() {
+        assert_eq!(problem017::run(1), 3); 
+    }
+
+    #[test]    
+    fn problem017_test02() {
+        assert_eq!(problem017::run(2), 6); 
+    }
+
+    #[test]    
+    fn problem017_test03() {
+        assert_eq!(problem017::run(3), 11); 
+    }
+
+    #[test]    
+    fn problem017_test04() {
+        assert_eq!(problem017::run(4), 15); 
+    }
+
+    #[test]    
+    fn problem017_test05() {
+        assert_eq!(problem017::run(5), 19); 
+    }
+
+    #[test]    
+    fn problem017_test06() {
+        assert_eq!(problem017::run(15), 74); 
+    }
+
+    #[test]    
+    fn problem017_test07() {
+        assert_eq!(problem017::run(1_000), 21_124); 
     }
 
 }
