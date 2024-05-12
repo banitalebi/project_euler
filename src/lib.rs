@@ -439,10 +439,10 @@ pub mod problem013 {
 }
 
 
-pub mod problem014 {
-    // Problem 14: Longest Collatz sequence
-    // https://projecteuler.net/problem=14
+pub mod problem014 {    
     pub fn run(number: u64) -> u64 {
+        // Problem 14: Longest Collatz sequence
+        // https://projecteuler.net/problem=14
         let mut best_origin: u64 = 0;
         let mut best_record: u64 = 0;            
         for current_origin in 0..number {
@@ -485,10 +485,11 @@ pub mod problem014 {
 
 
 pub mod problem015 {
-    // Problem 15: Lattice Paths
-    // https://projecteuler.net/problem=15
+    // cargo add gcd
     use gcd::Gcd;
     pub fn run(s:u64) -> u64 {
+        // Problem 15: Lattice Paths
+        // https://projecteuler.net/problem=15
         (1+s..=2*s).zip(1..=s)
         .fold((1u64, 1u64), |(num, deno), (n, d)| {
             let num:u64 = num * n;
@@ -500,10 +501,10 @@ pub mod problem015 {
 }
 
 
-pub mod problem016 {
-    // Problem 16: Power digit sum
-    // https://projecteuler.net/problem=16
+pub mod problem016 {    
     pub fn run(exponent:u32) -> u32 {
+        // Problem 16: Power digit sum
+        // https://projecteuler.net/problem=16
         Digit::new(exponent).last().unwrap()
     }
 
@@ -554,10 +555,10 @@ pub mod problem016 {
 }
 
 
-pub mod problem017 {
-    // Problem 17: Number Letter Counts
-    // https://projecteuler.net/problem=17
+pub mod problem017 {    
     pub fn run(num: u32) -> usize {
+        // Problem 17: Number Letter Counts
+        // https://projecteuler.net/problem=17
         let count_words = |s:String| s.chars().filter(|&c| c!=' ').count();
         (1..=num)
         .map(spell_numbers)
@@ -640,6 +641,7 @@ pub mod problem017 {
         "one thousand".to_string()
     }
 }
+
 
 #[cfg(test)]
 mod tests {
