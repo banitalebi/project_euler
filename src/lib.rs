@@ -439,7 +439,7 @@ pub mod problem013 {
 }
 
 
-pub mod problem014 {    
+pub mod problem014 {
     pub fn run(number: u64) -> u64 {
         // Problem 14: Longest Collatz sequence
         // https://projecteuler.net/problem=14
@@ -501,7 +501,7 @@ pub mod problem015 {
 }
 
 
-pub mod problem016 {    
+pub mod problem016 {
     pub fn run(exponent:u32) -> u32 {
         // Problem 16: Power digit sum
         // https://projecteuler.net/problem=16
@@ -555,7 +555,7 @@ pub mod problem016 {
 }
 
 
-pub mod problem017 {    
+pub mod problem017 {
     pub fn run(num: u32) -> usize {
         // Problem 17: Number Letter Counts
         // https://projecteuler.net/problem=17
@@ -639,6 +639,36 @@ pub mod problem017 {
             return handle_hundreds(num);
         }
         "one thousand".to_string()
+    }
+}
+
+
+pub mod problem018 {
+    use std::cmp;
+    pub fn run(triangle: &str) -> u32 {
+        // Problem 18: Maximum Path Sum I
+        // https://projecteuler.net/problem=18
+        let mut triangle_lines:Vec<Vec<u32>> = triangle
+        .lines()
+        .map(|line| line
+            .trim()
+            .split_whitespace()
+            .filter_map(|digit| digit.parse::<u32>().ok())
+            .collect::<Vec<u32>>())
+        .collect::<Vec<Vec<u32>>>();
+        
+        let last_line = triangle_lines
+        .pop()
+        .unwrap();
+        
+        triangle_lines
+        .iter()
+        .rev()
+        .fold(last_line, |mut add_up, line| {
+            for (i, l) in line.iter().enumerate() {
+                add_up[i] = l + cmp::max(add_up[i], add_up[i + 1]);
+            }
+            add_up})[0]
     }
 }
 
@@ -856,6 +886,35 @@ mod tests {
     #[test]    
     fn problem017_test07() {
         assert_eq!(problem017::run(1_000), 21_124); 
+    }
+
+    #[test]    
+    fn problem018_test01() {
+        let triangle = "  3
+                                7 4
+                                2 4 6
+                                8 5 9 3";
+        assert_eq!(problem018::run(triangle), 23); 
+    }
+
+    #[test]    
+    fn problem018_test02() {
+        let triangle = "  75
+                                95 64
+                                17 47 82
+                                18 35 87 10
+                                20 04 82 47 65
+                                19 01 23 75 03 34
+                                88 02 77 73 07 63 67
+                                99 65 04 28 06 16 70 92
+                                41 41 26 56 83 40 80 70 33
+                                41 48 72 33 47 32 37 16 94 29
+                                53 71 44 65 25 43 91 52 97 51 14
+                                70 11 33 28 77 73 17 78 39 68 17 57
+                                91 71 52 38 17 14 91 43 58 50 27 29 48
+                                63 66 04 68 89 53 67 30 73 16 69 87 40 31
+                                04 62 98 27 23 09 70 98 73 93 38 53 60 04 23";
+        assert_eq!(problem018::run(triangle), 1_074); 
     }
 
 }
