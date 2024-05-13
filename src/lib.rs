@@ -673,6 +673,42 @@ pub mod problem018 {
 }
 
 
+pub mod problem019 {
+    pub fn run() -> u32 {
+        // Problem 19: Counting Sundays
+        // https://projecteuler.net/problem=19        
+        // let us Sunday be 0, Monday 1, Tuesday 2, ...
+        // as 1 January 1901 was Tuesday then 
+        let mut day = 2;
+        let mut sundays = 0;        
+        for year in 1901..=2000 {
+            for month in 1..=12 {                
+                day += days_in(year, month);                
+                if day%7 == 0 {
+                    sundays += 1;
+                    day=0;
+                }                
+            }
+            
+        }
+        sundays
+    }    
+
+    fn days_in(year: u32, month: u32) -> u32 {
+        match month {            
+            4 | 6 | 9 | 11 => 30,
+            1 | 3 | 5 | 7 | 8 | 10 | 12 => 31,
+            _ => if is_leap(year) {29} else {28}            
+        }
+    }
+
+    fn is_leap(year: u32) -> bool {
+        year%4 == 0 && year%100 != 0 || year%400 == 0
+    }
+
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -915,6 +951,11 @@ mod tests {
                                 63 66 04 68 89 53 67 30 73 16 69 87 40 31
                                 04 62 98 27 23 09 70 98 73 93 38 53 60 04 23";
         assert_eq!(problem018::run(triangle), 1_074); 
+    }
+
+    #[test]    
+    fn problem019_test01() {
+        assert_eq!(problem019::run(), 171); 
     }
 
 }
