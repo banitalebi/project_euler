@@ -709,6 +709,60 @@ pub mod problem019 {
 }
 
 
+pub mod problem020 {
+    pub fn run(number :u32) -> u32 {
+        // Problem 20: Factorial Digit Sum
+        // https://projecteuler.net/problem=20
+        Digit::new(number).last().unwrap()
+    }
+
+    struct Digit {
+        number: u32,
+        current: u32,
+        carry: u32,
+        maxdigit: usize,
+        factors: Vec<u32>,
+        sum:u32
+    }
+
+    impl Digit {
+        fn new(number:u32) -> Self {
+            let maxdigit = 1 + (2..=number)
+            .map(|x| (x as f64).log10())
+            .sum::<f64>()
+            .ceil() as usize;
+            let mut factors:Vec<u32> = vec![0; maxdigit];
+            factors[0]=1;
+            Digit {number, current: 1, carry: 0, maxdigit, factors, sum:0}
+        }
+    }    
+
+    impl Iterator for Digit {
+        type Item = u32;    
+        fn next(&mut self) -> Option<Self::Item> {
+            match self.current <= self.number {
+                false => None,
+                true => {                
+                    for j in 0..self.maxdigit {
+                        let temp:u32 = self.current * self.factors[j] + self.carry;
+                        self.carry = 0;
+                        if temp>9{
+                            self.factors[j] = temp % 10;
+                            self.carry = temp/10;
+                        }else{
+                            self.factors[j] = temp;
+                        }
+                    }
+                    self.sum = self.factors.iter().sum();
+                    self.current+=1;
+                    Some(self.sum)
+                    }
+            }
+        }
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -956,6 +1010,41 @@ mod tests {
     #[test]    
     fn problem019_test01() {
         assert_eq!(problem019::run(), 171); 
+    }
+
+    #[test]    
+    fn problem020_test01() {
+        assert_eq!(problem020::run(1), 1); 
+    }
+
+    #[test]    
+    fn problem020_test02() {
+        assert_eq!(problem020::run(2), 2); 
+    }
+
+    #[test]    
+    fn problem020_test03() {
+        assert_eq!(problem020::run(3), 6); 
+    }
+
+    #[test]    
+    fn problem020_test04() {
+        assert_eq!(problem020::run(4), 6); 
+    }
+
+    #[test]    
+    fn problem020_test05() {
+        assert_eq!(problem020::run(5), 3); 
+    }
+
+    #[test]    
+    fn problem020_test06() {
+        assert_eq!(problem020::run(10), 27); 
+    }
+
+    #[test]    
+    fn problem020_test07() {
+        assert_eq!(problem020::run(100), 648); 
     }
 
 }
