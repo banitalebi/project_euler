@@ -763,6 +763,49 @@ pub mod problem020 {
 }
 
 
+pub mod problem021 {
+    pub fn run(number: u64) -> u64 {
+        // Problem 21: Amicable Numbers
+        // https://projecteuler.net/problem=21
+        (2..number)
+        .filter(condition)
+        .collect::<Vec<u64>>()
+        .iter()
+        .sum()        
+    }
+
+    trait Divisors {
+        fn proper_divisors(&self) -> Vec<u64>;
+    }
+    
+    impl Divisors for u64 {
+        fn proper_divisors(&self) -> Vec<u64> {
+            let mut divisors: Vec<u64> = Vec::new();
+            for i in 1..*self {
+                if *self % i == 0 {
+                    divisors.push(i);
+                }
+            }
+            divisors
+        }
+    }
+    
+    fn sum_divisors(n: u64) -> u64 {
+        n.proper_divisors().iter().sum()        
+    }
+
+    fn condition(n: &u64) -> bool{
+        let s = sum_divisors(*n);
+        let p = sum_divisors(s);
+        if *n==p && *n!=s{
+            return true;
+        }
+        false
+    }
+
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1045,6 +1088,16 @@ mod tests {
     #[test]    
     fn problem020_test07() {
         assert_eq!(problem020::run(100), 648); 
+    }
+
+    #[test]    
+    fn problem021_test01() {
+        assert_eq!(problem021::run(100), 0); 
+    }
+
+    #[test]    
+    fn problem021_test02() {
+        assert_eq!(problem021::run(10_000), 31_626); 
     }
 
 }
