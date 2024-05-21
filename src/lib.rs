@@ -806,6 +806,38 @@ pub mod problem021 {
 }
 
 
+pub mod problem022 {
+    use std::fs;
+    pub fn run() -> u32{
+        // Problem 22: Names Scores
+        // https://projecteuler.net/problem=22
+        let path = "src/data/p022.txt";
+        let data = fs::read_to_string(path)
+        .unwrap()
+        .trim()
+        .replace("\"", "");
+        
+        let mut words: Vec<&str> = data
+        .split(",")
+        .map(|s| s.trim())
+        .collect();        
+        words.sort();
+
+        let mut i: u32 = 0;
+        words.iter().map(|w| { w
+            .chars()
+            .map(|c| (c as u8 - b'A' + 1) as u32)
+            .collect::<Vec<u32>>()
+            .into_iter()
+            .sum()})
+        .collect::<Vec<u32>>()
+        .into_iter()
+        .map(|n| { i += 1; i * n })
+        .sum()
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1098,6 +1130,11 @@ mod tests {
     #[test]    
     fn problem021_test02() {
         assert_eq!(problem021::run(10_000), 31_626); 
+    }
+
+    #[test]    
+    fn problem022_test01() {
+        assert_eq!(problem022::run(), 871_198_282); 
     }
 
 }
