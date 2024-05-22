@@ -838,6 +838,58 @@ pub mod problem022 {
 }
 
 
+pub mod problem023 {
+    pub fn run(num: u64) -> u64 {
+        // Problem 23: Non-Abundant Sums
+        // https://projecteuler.net/problem=23
+        (1u64..=num)
+        .filter(|n|!n.is_sum_of_two_abundents())
+        .collect::<Vec<u64>>()
+        .iter()
+        .sum()
+    }
+
+    trait Abundant {
+        fn sum_proper_divisors(&self) -> u64;
+        fn is_abundant(&self) -> bool;
+        fn is_sum_of_two_abundents(&self) -> bool;    
+    }
+
+    impl Abundant for u64 {
+        fn sum_proper_divisors(&self) -> u64 {
+            let mut i: u64 = 1;
+            let mut divisors: Vec<u64> = Vec::new();
+            while i <= *self/2 {
+                if *self % i == 0 {
+                    divisors.push(i);
+                }
+                i+=1;
+            }
+            divisors.iter().sum()
+        }
+        fn is_abundant(&self) -> bool {
+            if self.sum_proper_divisors() > *self {
+                return true;            
+            }
+            false
+        }
+        fn is_sum_of_two_abundents(&self) -> bool {
+            let mut i: u64 = 1;
+            while i <= *self/2 {
+                if i.is_abundant(){
+                    let j: u64 = *self-i;
+                    if j.is_abundant(){
+                        return true;
+                    }
+                }
+                i+=1;
+            }
+            false
+        }
+
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1135,6 +1187,22 @@ mod tests {
     #[test]    
     fn problem022_test01() {
         assert_eq!(problem022::run(), 871_198_282); 
+    }
+
+    #[test]    
+    fn problem023_test01() {
+        assert_eq!(problem023::run(23), 276); 
+    }
+
+
+    #[test]    
+    fn problem023_test02() {
+        assert_eq!(problem023::run(24), 276); 
+    }
+
+    #[test]    
+    fn problem023_test03() {
+        assert_eq!(problem023::run(28_123), 4_179_871); 
     }
 
 }
