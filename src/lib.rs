@@ -890,6 +890,63 @@ pub mod problem023 {
     }
 }
 
+pub mod problem024 {
+    pub fn run(n: usize) -> String {
+        // Problem 24: Lexicographic Permutations
+        // https://projecteuler.net/problem=24
+        Permutation::new()
+        .into_iter()
+        .nth(n-1)
+        .unwrap()
+        .iter()
+        .map(|&digit| char::from_digit(digit as u32, 10)
+        .unwrap())
+        .into_iter()
+        .collect::<String>()
+    }
+    struct Permutation {
+        index: u64,
+        digits: Vec<u8>
+    }
+
+    impl Permutation {
+        fn new() -> Self {
+            let digits: Vec<u8> = vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+            Permutation {index: 1, digits}
+        }
+    }    
+
+    impl Iterator for Permutation {
+        type Item = Vec<u8>;    
+        fn next(&mut self) -> Option<Self::Item> {
+            match self.index < 3_628_899 {
+                false => None,
+                true => {
+                    let temp = self.digits.clone();
+                    let n = self.digits.len();
+                    let mut i = (n - 2) as isize;
+
+                    while i >= 0 && self.digits[i as usize] >= self.digits[(i + 1) as usize] {
+                        i -= 1;
+                    }
+
+                    if i >= 0 {
+                        let mut j = (n - 1) as isize;
+                        while j > i && self.digits[j as usize] <= self.digits[i as usize] {
+                            j -= 1;
+                        }
+                        self.digits.swap(i as usize, j as usize);
+                    }
+
+                    self.digits[i as usize + 1..].reverse();
+                    self.index += 1;
+                    Some(temp)
+                    }
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1194,7 +1251,6 @@ mod tests {
         assert_eq!(problem023::run(23), 276); 
     }
 
-
     #[test]    
     fn problem023_test02() {
         assert_eq!(problem023::run(24), 276); 
@@ -1203,6 +1259,21 @@ mod tests {
     #[test]    
     fn problem023_test03() {
         assert_eq!(problem023::run(28_123), 4_179_871); 
+    }
+
+    #[test]    
+    fn problem024_test01() {
+        assert_eq!(problem024::run(1), "0123456789".to_string()); 
+    }
+
+    #[test]    
+    fn problem024_test02() {
+        assert_eq!(problem024::run(2), "0123456798".to_string()); 
+    }
+
+    #[test]    
+    fn problem024_test03() {
+        assert_eq!(problem024::run(1_000_000), "2783915460".to_string()); 
     }
 
 }

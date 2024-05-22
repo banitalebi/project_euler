@@ -1,5 +1,5 @@
-use project_euler::problem023;
+use project_euler::problem024;
 
 fn main() {
-    println!("{}", problem023::run(28_123));   
+    println!("{}", problem024::run(1_000_000));   
 }
